@@ -6,11 +6,12 @@ const $noteList = $(".list-container .list-group");
 
 // activeNote is used to keep track of the note in the textarea
 let activeNote = {};
+let id = -1;
 
 // TEMPLATE SCRIPTS
 // =============================================================
 
-// A function for getting all notes from the db
+// A function for getting all notes from the db. Here it's retrieving the DB JSON file.
 const getNotes = () => {
   return $.ajax({
     url: "/api/notes",
@@ -18,8 +19,10 @@ const getNotes = () => {
   });
 };
 
+// ###DONE - THIS IS SENDING THE NOTE DATA TO BACKEND
+// Object created on front end, being fed into arugment
 // A function for saving a note to the db
-const saveNote = (note) => { // NOTE: THIS IS SENDING THE NOTE DATA TO BACKEND
+const saveNote = (note) => {
   return $.ajax({
     url: "/api/notes",
     data: note,
@@ -27,6 +30,7 @@ const saveNote = (note) => { // NOTE: THIS IS SENDING THE NOTE DATA TO BACKEND
   });
 };
 
+// User is making a delete request that needs to be listened for on backend.
 // A function for deleting a note from the db
 const deleteNote = (id) => {
   return $.ajax({
@@ -52,17 +56,17 @@ const renderActiveNote = () => {
   }
 };
 
-
-
-
+// #2
+// Where the object is first being created
 // Get the note data from the inputs, save it to the db and update the view
 const handleNoteSave = function (event) {
   event.preventDefault();
+  id++;
   const newNote = {
+    id: id, // <-- INSERTED ID IN OBJECT
     title: $noteTitle.val(),
     text: $noteText.val(),
   };
-
   saveNote(newNote).then(() => {
     getAndRenderNotes();
     renderActiveNote();
@@ -108,7 +112,7 @@ const handleRenderSaveBtn = function () {
   }
 };
 
-// Render's the list of note titles
+// Render's the list of note titles. DB JSON files being fed here.
 const renderNoteList = (notes) => {
   $noteList.empty();
 
@@ -135,7 +139,8 @@ const renderNoteList = (notes) => {
   }
 
   notes.forEach((note) => {
-    const $li = create$li(note.title).data(note);
+    //const noteId = notes.indexOf(note);
+    const $li = create$li(note.title).data(note); //.attr("data-id", noteId);
     noteListItems.push($li);
   });
 
@@ -147,7 +152,7 @@ const getAndRenderNotes = () => {
   return getNotes().then(renderNoteList);
 };
 
-$saveNoteBtn.on("click", handleNoteSave);
+$saveNoteBtn.on("click", handleNoteSave); //#1
 $noteList.on("click", ".list-group-item", handleNoteView);
 $newNoteBtn.on("click", handleNewNoteView);
 $noteList.on("click", ".delete-note", handleNoteDelete);
