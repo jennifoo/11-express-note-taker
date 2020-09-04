@@ -67,7 +67,7 @@ app.post("/api/notes/", function(req, res) {
 
 // DELETE NOTES
 app.delete("/api/notes/:id", function(req, res) {
-  let newTableData = [];
+  // let newTableData = [];
   var chosen = req.params.id;
   fs.readFile(path_db, "utf8", function(error, data) {
     if (error) {
@@ -80,20 +80,21 @@ app.delete("/api/notes/:id", function(req, res) {
     console.log(data);
     console.log("------------");
 
-    data.forEach( element => newTableData.push(element) );
-    console.log(newTableData);
+    tableData = [];
+
+    data.forEach( element => tableData.push(element) );
+    console.log(tableData);
     console.log("------------");
 
-    console.log(newTableData);
+    let index = tableData.findIndex( obj => obj.id === chosen );
+
+    console.log(index);
     console.log("------------");
 
-    console.log(chosen);
-    console.log("------------");
+    tableData.splice(index, 1);
+    console.log(tableData);
 
-    newTableData.splice(chosen, 1);
-    console.log(newTableData);
-
-              fs.writeFile(path_db, JSON.stringify(newTableData, null, "\t"), function(err) {
+              fs.writeFile(path_db, JSON.stringify(tableData, null, "\t"), function(err) {
                 if (err) {
                   return console.log(err);
                 } console.log("File REWRITTEN!");
