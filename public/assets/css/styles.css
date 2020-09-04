@@ -4,10 +4,6 @@ html, body {
   padding: 0;
 
 }
-body, .card {
-    background-color: #666;
-}
-input, textarea, .list-group-item { background-color: #eee }
 
 .save-note {
   display: none;

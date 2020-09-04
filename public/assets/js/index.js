@@ -19,8 +19,8 @@ const getNotes = () => {
   });
 };
 
-// ###DONE - THIS IS SENDING THE NOTE DATA TO BACKEND
-// Object created on front end, being fed into arugment
+// THIS IS SENDING THE NOTE DATA TO BACKEND
+// Object created on front end, being passed into arugment
 // A function for saving a note to the db
 const saveNote = (note) => {
   return $.ajax({
@@ -56,14 +56,13 @@ const renderActiveNote = () => {
   }
 };
 
-// #2
 // Where the object is first being created
 // Get the note data from the inputs, save it to the db and update the view
 const handleNoteSave = function (event) {
   event.preventDefault();
   id++;
   const newNote = {
-    id: id, // <-- INSERTED ID IN OBJECT
+    id: id,
     title: $noteTitle.val(),
     text: $noteText.val(),
   };
@@ -79,7 +78,6 @@ const handleNoteDelete = function (event) {
   event.stopPropagation();
 
   const note = $(this).parent(".list-group-item").data();
-  console.log(note); // note reveals previous data associated with the item. Returns object {} including id key.
 
   if (activeNote.id === note.id) {
     activeNote = {};
@@ -113,7 +111,7 @@ const handleRenderSaveBtn = function () {
   }
 };
 
-// Render's the list of note titles. DB JSON files being fed here.
+// Render's the list of note titles. DB JSON files being passed here.
 const renderNoteList = (notes) => {
   $noteList.empty();
 
@@ -141,7 +139,7 @@ const renderNoteList = (notes) => {
 
   notes.forEach((note) => {
     //const noteId = notes.indexOf(note);
-    const $li = create$li(note.title).data(note); //.attr("data-id", noteId);
+    const $li = create$li(note.title).data(note);
     noteListItems.push($li);
   });
 

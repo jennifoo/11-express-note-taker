@@ -14,10 +14,8 @@ app.use(express.json());
 let tableData = [];
 var path_db = path.join(__dirname, "db/db.json");
 
-
 // Routes
 // =============================================================
-
 
 app.get("/assets/css/styles.css", function(req, res) {
   res.sendFile(path.join(__dirname, "public/assets/css/styles.css"));
@@ -64,7 +62,6 @@ app.post("/api/notes/", function(req, res) {
   res.json(tableData);
 })
 
-
 // DELETE NOTES
 app.delete("/api/notes/:id", function(req, res) {
   // let newTableData = [];
@@ -73,46 +70,19 @@ app.delete("/api/notes/:id", function(req, res) {
     if (error) {
       return console.log(error);
     }
-    console.log(data);
-    console.log("------------");
-
     data = JSON.parse(data);
-    console.log(data);
-    console.log("------------");
-
     tableData = [];
-
     data.forEach( element => tableData.push(element) );
-    console.log(tableData);
-    console.log("------------");
-
     let index = tableData.findIndex( obj => obj.id === chosen );
-
-    console.log(index);
-    console.log("------------");
-
     tableData.splice(index, 1);
-    console.log(tableData);
-
               fs.writeFile(path_db, JSON.stringify(tableData, null, "\t"), function(err) {
                 if (err) {
                   return console.log(err);
-                } console.log("File REWRITTEN!");
+                } console.log("DB file rewritten!");
               });
-
   }); // End of readFile
   res.send('Delete request completed')
 })
-
-
-// newTableData.push(JSON.parse(data));
-// console.log(newTableData);
-// newTableData.splice(0);
-// console.log(newTableData);
-
-// tableData.splice(chosen);
-// res.send('Got a DELETE request at /user')
-
 
 app.listen(PORT, function(){
   console.log("App listening on PORT " + PORT);
