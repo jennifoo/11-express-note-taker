@@ -1,11 +1,14 @@
 {
   "name": "note-taker",
   "version": "1.0.0",
-  "description": "run server.js and type in localhost:3000",
+  "description": "Note taking application using the express module.",
   "main": "server.js",
   "author": "",
   "license": "ISC",
   "dependencies": {
     "express": "^4.16.4"
-  }
+  },
+  "scripts": {
+      "start": "node server.js"
+    }
 }
