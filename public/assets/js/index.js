@@ -19,8 +19,7 @@ const getNotes = () => {
   });
 };
 
-// THIS IS SENDING THE NOTE DATA TO BACKEND
-// Object created on front end, being passed into arugment
+// Object created on front end, being passed into argument
 // A function for saving a note to the db
 const saveNote = (note) => {
   return $.ajax({
@@ -62,7 +61,7 @@ const handleNoteSave = function (event) {
   event.preventDefault();
   id++;
   const newNote = {
-    id: id,
+    id: id, // <-- INSERTED ID IN OBJECT
     title: $noteTitle.val(),
     text: $noteText.val(),
   };
@@ -78,6 +77,7 @@ const handleNoteDelete = function (event) {
   event.stopPropagation();
 
   const note = $(this).parent(".list-group-item").data();
+  console.log(note); // note reveals previous data associated with the item. Returns object {} including id key.
 
   if (activeNote.id === note.id) {
     activeNote = {};
@@ -138,7 +138,6 @@ const renderNoteList = (notes) => {
   }
 
   notes.forEach((note) => {
-    //const noteId = notes.indexOf(note);
     const $li = create$li(note.title).data(note);
     noteListItems.push($li);
   });
@@ -151,7 +150,7 @@ const getAndRenderNotes = () => {
   return getNotes().then(renderNoteList);
 };
 
-$saveNoteBtn.on("click", handleNoteSave); //#1
+$saveNoteBtn.on("click", handleNoteSave);
 $noteList.on("click", ".list-group-item", handleNoteView);
 $newNoteBtn.on("click", handleNewNoteView);
 $noteList.on("click", ".delete-note", handleNoteDelete);

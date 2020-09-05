@@ -17,6 +17,8 @@ var path_db = path.join(__dirname, "db/db.json");
 // Routes
 // =============================================================
 
+
+
 app.get("/assets/css/styles.css", function(req, res) {
   res.sendFile(path.join(__dirname, "public/assets/css/styles.css"));
 });
@@ -39,6 +41,10 @@ app.get("/api/notes", function(req, res) {
 
 app.get("/api/notes/1", function(req, res) {
   res.sendFile(path.join(__dirname, "db/db.json"));
+});
+
+app.get("*", function(req, res) {
+  res.sendFile(path.join(__dirname, "public/index.html"));
 });
 
 // Listener
