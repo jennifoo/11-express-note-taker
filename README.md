@@ -1,5 +1,3 @@
-https://jennifoo-express-note-taker.herokuapp.com/
-
 # Note Taker using the Express Node Module
 
 ## Description
